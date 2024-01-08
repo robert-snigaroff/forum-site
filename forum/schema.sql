@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS comment;
 
 CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,5 +26,5 @@ CREATE TABLE comment (
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     body TEXT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES user (id),
-    FOREIGN KEY (post_id) REFERENCES post (id),
-)
+    FOREIGN KEY (post_id) REFERENCES post (id)
+);
