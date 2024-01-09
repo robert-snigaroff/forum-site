@@ -1,0 +1,134 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Forum</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+    <h1>Forum</h1>
+    <ul>
+        {% if g.user %}
+            <li><span>{{ g.user['username'] }}</span>
+            <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a>
+            <li><a href="{{ url_for('auth.login') }}">Log In</a>
+        {% endif %}
+    </ul>
+</nav>
+<div class="content">
+    <div class="column">
+        <ul>
+            <li><a href="">board name goes here</a></li>
+        </ul>
+    </div>
+</div>
+<!--
+<div class="boxcontent">
+    <div class="column">
+    <h3 style="text-decoration: underline; display: inline;">Japanese Culture</h3>
+    <ul>
+    <li><a href="//boards.4chan.org/a/" class="boardlink">Anime &amp; Manga</a></li>
+    <li><a href="//boards.4chan.org/c/" class="boardlink">Anime/Cute</a></li>
+    <li><a href="//boards.4chan.org/w/" class="boardlink">Anime/Wallpapers</a></li>
+    <li><a href="//boards.4chan.org/m/" class="boardlink">Mecha</a></li>
+    <li><a href="//boards.4chan.org/cgl/" class="boardlink">Cosplay &amp; EGL</a></li>
+    <li><a href="//boards.4chan.org/cm/" class="boardlink">Cute/Male</a></li>
+    <li><a href="//boards.4chan.org/f/" class="boardlink">Flash</a></li>
+    <li><a href="//boards.4chan.org/n/" class="boardlink">Transportation</a></li>
+    <li><a href="//boards.4chan.org/jp/" class="boardlink">Otaku Culture</a></li>
+    <li><a href="//boards.4chan.org/vt/" class="boardlink">Virtual YouTubers</a></li>
+    </ul>
+    <h3 style="text-decoration: underline; display: inline;">Video Games</h3>
+    <ul>
+    <li><a href="//boards.4chan.org/v/" class="boardlink">Video Games</a></li>
+    <li><a href="//boards.4chan.org/vg/" class="boardlink">Video Game Generals</a></li>
+    <li><a href="//boards.4chan.org/vm/" class="boardlink">Video Games/Multiplayer</a></li>
+    <li><a href="//boards.4chan.org/vmg/" class="boardlink">Video Games/Mobile</a></li>
+    <li><a href="//boards.4chan.org/vp/" class="boardlink">Pokémon</a></li>
+    <li><a href="//boards.4chan.org/vr/" class="boardlink">Retro Games</a></li>
+    <li><a href="//boards.4chan.org/vrpg/" class="boardlink">Video Games/RPG</a></li>
+    <li><a href="//boards.4chan.org/vst/" class="boardlink">Video Games/Strategy</a></li>
+    </ul>
+    </div>
+    <div class="column">
+    <h3 style="text-decoration: underline; display: inline;">Interests</h3>
+    <ul>
+    <li><a href="//boards.4chan.org/co/" class="boardlink">Comics &amp; Cartoons</a></li>
+    <li><a href="//boards.4chan.org/g/" class="boardlink">Technology</a></li>
+    <li><a href="//boards.4chan.org/tv/" class="boardlink">Television &amp; Film</a></li>
+    <li><a href="//boards.4chan.org/k/" class="boardlink">Weapons</a></li>
+    <li><a href="//boards.4chan.org/o/" class="boardlink">Auto</a></li>
+    <li><a href="//boards.4chan.org/an/" class="boardlink">Animals &amp; Nature</a></li>
+    <li><a href="//boards.4chan.org/tg/" class="boardlink">Traditional Games</a></li>
+    <li><a href="//boards.4chan.org/sp/" class="boardlink">Sports</a></li>
+    <li><a href="//boards.4chan.org/xs/" class="boardlink">Extreme Sports</a></li>
+    <li><a href="//boards.4chan.org/pw/" class="boardlink">Professional Wrestling</a></li>
+    <li><a href="//boards.4chan.org/sci/" class="boardlink">Science &amp; Math</a></li>
+    <li><a href="//boards.4chan.org/his/" class="boardlink">History &amp; Humanities</a></li>
+    <li><a href="//boards.4chan.org/int/" class="boardlink">International</a></li>
+    <li><a href="//boards.4chan.org/out/" class="boardlink">Outdoors</a></li>
+    <li><a href="//boards.4chan.org/toy/" class="boardlink">Toys</a></li>
+    </ul>
+    </div>
+    <div class="column">
+    <h3 style="text-decoration: underline; display: inline;">Creative</h3>
+    <ul>
+    <li><a href="//boards.4chan.org/i/" class="boardlink">Oekaki</a></li>
+    <li><a href="//boards.4chan.org/po/" class="boardlink">Papercraft &amp; Origami</a></li>
+    <li><a href="//boards.4chan.org/p/" class="boardlink">Photography</a></li>
+    <li><a href="//boards.4chan.org/ck/" class="boardlink">Food &amp; Cooking</a></li>
+    <li><a href="//boards.4chan.org/ic/" class="boardlink">Artwork/Critique</a></li>
+    <li><a href="//boards.4chan.org/wg/" class="boardlink">Wallpapers/General</a></li>
+    <li><a href="//boards.4chan.org/lit/" class="boardlink">Literature</a></li>
+    <li><a href="//boards.4chan.org/mu/" class="boardlink">Music</a></li>
+    <li><a href="//boards.4chan.org/fa/" class="boardlink">Fashion</a></li>
+    <li><a href="//boards.4chan.org/3/" class="boardlink">3DCG</a></li>
+    <li><a href="//boards.4chan.org/gd/" class="boardlink">Graphic Design</a></li>
+    <li><a href="//boards.4chan.org/diy/" class="boardlink">Do-It-Yourself</a></li>
+    <li><a href="//boards.4chan.org/wsg/" class="boardlink">Worksafe GIF</a></li>
+    <li><a href="//boards.4chan.org/qst/" class="boardlink">Quests</a></li>
+    </ul>
+    </div>
+    <div class="column">
+    <h3 style="text-decoration: underline; display: inline;">Other</h3>
+    <ul>
+    <li><a href="//boards.4chan.org/biz/" class="boardlink">Business &amp; Finance</a></li>
+    <li><a href="//boards.4chan.org/trv/" class="boardlink">Travel</a></li>
+    <li><a href="//boards.4chan.org/fit/" class="boardlink">Fitness</a></li>
+    <li><a href="//boards.4chan.org/x/" class="boardlink">Paranormal</a></li>
+    <li><a href="//boards.4chan.org/adv/" class="boardlink">Advice</a></li>
+    <li><a href="//boards.4chan.org/lgbt/" class="boardlink">LGBT</a></li>
+    <li><a href="//boards.4chan.org/mlp/" class="boardlink">Pony</a></li>
+    <li><a href="//boards.4chan.org/news/" class="boardlink">Current News</a></li>
+    <li><a href="//boards.4chan.org/wsr/" class="boardlink">Worksafe Requests</a></li>
+    <li><a href="//boards.4chan.org/vip/" class="boardlink">Very Important Posts</a></li>
+    </ul>
+    <h3 style="text-decoration: underline; display: inline;">Misc.</h3> <h3 style="display: inline;"><span class="warning" title="Not Safe For Work"><sup style="vertical-align: text-bottom;">(NSFW)</sup></span></h3>
+    <ul>
+    <li><a href="//boards.4chan.org/b/" class="boardlink">Random</a></li>
+    <li><a href="//boards.4chan.org/r9k/" class="boardlink">ROBOT9001</a></li>
+    <li><a href="//boards.4chan.org/pol/" class="boardlink">Politically Incorrect</a></li>
+    <li><a href="//boards.4chan.org/bant/" class="boardlink">International/Random</a></li>
+    <li><a href="//boards.4chan.org/soc/" class="boardlink">Cams &amp; Meetups</a></li>
+    <li><a href="//boards.4chan.org/s4s/" class="boardlink">Shit 4chan Says</a></li>
+    </ul>
+    </div>
+    <div class="column">
+    <h3 style="text-decoration: underline; display: inline;">Adult</h3> <h3 style="display: inline;"><span class="warning" title="Not Safe For Work"><sup style="vertical-align: text-bottom;">(NSFW)</sup></span></h3>
+    <ul>
+    <li><a href="//boards.4chan.org/s/" class="boardlink">Sexy Beautiful Women</a></li>
+    <li><a href="//boards.4chan.org/hc/" class="boardlink">Hardcore</a></li>
+    <li><a href="//boards.4chan.org/hm/" class="boardlink">Handsome Men</a></li>
+    <li><a href="//boards.4chan.org/h/" class="boardlink">Hentai</a></li>
+    <li><a href="//boards.4chan.org/e/" class="boardlink">Ecchi</a></li>
+    <li><a href="//boards.4chan.org/u/" class="boardlink">Yuri</a></li>
+    <li><a href="//boards.4chan.org/d/" class="boardlink">Hentai/Alternative</a></li>
+    <li><a href="//boards.4chan.org/y/" class="boardlink">Yaoi</a></li>
+    <li><a href="//boards.4chan.org/t/" class="boardlink">Torrents</a></li>
+    <li><a href="//boards.4chan.org/hr/" class="boardlink">High Resolution</a></li>
+    <li><a href="//boards.4chan.org/gif/" class="boardlink">Adult GIF</a></li>
+    <li><a href="//boards.4chan.org/aco/" class="boardlink">Adult Cartoons</a></li>
+    <li><a href="//boards.4chan.org/r/" class="boardlink">Adult Requests</a></li>
+    </ul>
+    </div>
+    <br class="clear-bug">
+    </div>
+-->
