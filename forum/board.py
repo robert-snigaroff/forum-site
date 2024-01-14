@@ -10,4 +10,6 @@ def index():
     return render_template('index.html')
 
 
-#@bp.route('/<>')
+@bp.route('/<string:id>')
+def board(id):
+    return render_template('board.html')
