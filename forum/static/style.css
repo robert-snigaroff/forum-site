@@ -123,6 +123,11 @@ html {
     min-height: 12em;
     resize: vertical;
   }
+
+  .column {
+    float: left;
+    width: 33%;
+  }
   
   input.danger {
     color: #cc2f2e;
