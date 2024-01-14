@@ -8,10 +8,6 @@ from forum.db import get_db
 
 bp = Blueprint('post', __name__)
 
-@bp.route('/')
-def index():
-    return render_template('index.html')
-
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
