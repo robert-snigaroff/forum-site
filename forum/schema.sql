@@ -12,10 +12,10 @@ CREATE TABLE post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     author_id INTEGER NOT NULL,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    board TEXT NOT NULL,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES user (id)
-    -- board id?
 );
 
 CREATE TABLE comment (
