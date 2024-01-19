@@ -23,15 +23,15 @@ def create():
             flash(error)
         else:
             db = get_db()
-            db.execute(
+            db.execute( # figure something out with g here to pass the board id to the insert and the redirect
                 'INSERT INTO post (title, body, author_id)'
                 ' VALUES (?, ?, ?)',
                 (title, body, g.user['id'])
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('board.board', id=))
         
-    return render_template('blog/create.html')
+    return render_template('post/create.html')
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
