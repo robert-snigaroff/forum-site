@@ -13,15 +13,14 @@ def index():
     return render_template('index.html')
 
 
-@bp.route('/<string:id>')
-def board(id):
+@bp.route('/<string:board_id>')
+def board(board_id):
     db = get_db()
-    print(id)
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, u.username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.board_id = ?'
         ' ORDER BY created DESC',
-        [id]
+        [board_id]
     ).fetchall()
-    return render_template('board.html', posts=posts)
+    return render_template('board.html', board_id=board_id, posts=posts)

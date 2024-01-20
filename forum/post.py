@@ -8,9 +8,9 @@ from forum.db import get_db
 
 bp = Blueprint('post', __name__)
 
-@bp.route('/create', methods=('GET', 'POST'))
+@bp.route('/<string:board_id>/create', methods=('GET', 'POST'))
 @login_required
-def create():
+def create(board_id):
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
@@ -23,15 +23,15 @@ def create():
             flash(error)
         else:
             db = get_db()
-            db.execute( # figure something out with g here to pass the board id to the insert and the redirect
-                'INSERT INTO post (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+            db.execute(
+                'INSERT INTO post (title, body, author_id, board_id)'
+                ' VALUES (?, ?, ?, ?)',
+                (title, body, g.user['id'], [board_id])
             )
             db.commit()
-            return redirect(url_for('board.board', id=))
+            return redirect(url_for('board.board', board_id=board_id))
         
-    return render_template('post/create.html')
+    return render_template('post/create.html', board_id=board_id)
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
