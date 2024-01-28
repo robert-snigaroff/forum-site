@@ -26,7 +26,7 @@ def create(board_id):
             db.execute(
                 'INSERT INTO post (title, body, author_id, board_id)'
                 ' VALUES (?, ?, ?, ?)',
-                (title, body, g.user['id'], [board_id])
+                (title, body, g.user['id'], board_id)
             )
             db.commit()
             return redirect(url_for('board.board', board_id=board_id))
