@@ -33,9 +33,9 @@ def create(board_id):
         
     return render_template('post/create.html', board_id=board_id)
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+@bp.route('/<string:board_id>/<int:id>/update', methods=('GET', 'POST'))
 @login_required
-def update(id):
+def update(board_id, id):
     post = get_post(id)
 
     if request.method == 'POST':
@@ -56,18 +56,18 @@ def update(id):
                 (title, body, id)
             )
             db.commit()
-            return redirect(url_for('blog.index'))
+            return redirect(url_for('board.board', board_id=board_id))
     
-    return render_template('blog/update.html', post=post)
+    return render_template('post/update.html', post=post, board_id=board_id)
 
-@bp.route('/<int:id>/delete', methods=('POST',))
+@bp.route('/<string:board_id>/<int:id>/delete', methods=('POST',))
 @login_required
-def delete(id):
+def delete(board_id, id):
     get_post(id)
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
-    return redirect(url_for('blog.index'))
+    return redirect(url_for('board.board', board_id=board_id))
 
 
 def get_post(id, check_author=True):
