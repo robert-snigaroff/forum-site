@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}{{ board_id }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+        <header>
+            <div>
+                <h1>{{ post['title'] }}</h1>
+                <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+            </div>
+            {% if g.user['id'] == post['author_id'] %}
+                <a class="action" href="{{ url_for('post.update', id=post['id'], board_id=board_id) }}">Edit</a>
+            {% endif %}
+        </header>
+        <p class="body">{{ post['body'] }}</p>
+        <div class="comment">comments go here</div>
+    </article>
+{% endblock %}

@@ -69,6 +69,14 @@ def delete(board_id, id):
     db.commit()
     return redirect(url_for('board.board', board_id=board_id))
 
+@bp.route('/<string:board_id>/<int:id>', methods=('GET',))
+def view(board_id, id):
+    post = get_post(id)
+    
+    #comments = 
+    return render_template('post/view.html', post=post, board_id=board_id)
+
+
 
 def get_post(id, check_author=True):
     post = get_db().execute(
@@ -81,7 +89,10 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, f"Post id {id} does not exist.")
 
-    if check_author and post['author_id'] != g.user['id']:
-        abort(403)
+    #if check_author and post['author_id'] != g.user['id']:
+    #    abort(403)
     
     return post
+
+
+#def get_comment
