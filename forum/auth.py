@@ -91,4 +91,4 @@ def login_required(view):
     return wrapped_view
 
 
-# need to create a function to validate that the board_id points to a real board
+#TODO: create a function to validate that the board_id points to a real board

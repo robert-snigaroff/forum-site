@@ -33,6 +33,7 @@ def create(board_id):
         
     return render_template('post/create.html', board_id=board_id)
 
+
 @bp.route('/<string:board_id>/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(board_id, id):
@@ -60,6 +61,7 @@ def update(board_id, id):
     
     return render_template('post/update.html', post=post, board_id=board_id)
 
+
 @bp.route('/<string:board_id>/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(board_id, id):
@@ -69,12 +71,34 @@ def delete(board_id, id):
     db.commit()
     return redirect(url_for('board.board', board_id=board_id))
 
-@bp.route('/<string:board_id>/<int:id>', methods=('GET',))
+
+@bp.route('/<string:board_id>/<int:id>', methods=('GET','POST'))
 def view(board_id, id):
     post = get_post(id)
-    
-    #comments = 
-    return render_template('post/view.html', post=post, board_id=board_id)
+
+    if request.method == 'POST':
+        body = request.form['body']
+        error = None
+
+        if not body:
+            error = 'Comment cannot be empty.'
+        
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute(
+                'INSERT INTO comment (author_id, post_id, body)'
+                ' VALUES (?, ?, ?)',
+                (g.user['id'], id, body)
+            )
+            db.commit()
+
+            return redirect(url_for('post.view', id=id, board_id=board_id))
+
+    comments = get_comments(id)
+
+    return render_template('post/view.html', post=post, comments=comments, board_id=board_id)
 
 
 
@@ -95,4 +119,14 @@ def get_post(id, check_author=True):
     return post
 
 
-#def get_comment
+def get_comments(id):
+    comments = get_db().execute(
+        'SELECT c.id, c.author_id, c.created, c.body, u.username'
+        ' FROM comment c'
+        ' JOIN post p ON c.post_id = p.id'
+        ' JOIN user u ON c.author_id = u.id'
+        ' WHERE p.id = ?',
+        (id,)
+    ).fetchall()
+
+    return comments

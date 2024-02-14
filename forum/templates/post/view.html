@@ -16,6 +16,28 @@
             {% endif %}
         </header>
         <p class="body">{{ post['body'] }}</p>
-        <div class="comment">comments go here</div>
+        {% if g.user %}
+        <div class="new-comment">
+            <form method="post">
+                <label for="body">New Comment</label>
+                <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+                <input type="submit" value="Post">
+            </form>
+        </div>
+        {% endif %}
+        {% for comment in comments %}
+        <div class="comment">
+            <header>
+                <div>
+                    <h7>{{ comment['title'] }}</h7>
+                    <div class="about">by {{ comment['username'] }} on {{ comment['created'].strftime('%Y-%m-%d') }}</div>
+                </div>
+                {% if g.user['id'] == comment['author_id'] %}
+                    <a class="action" href="{{ url_for('post.update', id=post['id'], board_id=board_id) }}">Edit</a>
+                {% endif %}
+            </header>
+            <p class="body">{{ comment['body'] }}</p>
+        </div>
+        {% endfor %}
     </article>
 {% endblock %}
