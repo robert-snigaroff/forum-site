@@ -3,7 +3,7 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from forum.auth import login_required
+from forum.auth import login_required, validate_board, board_dict
 from forum.db import get_db
 
 bp = Blueprint('board', __name__)
@@ -23,4 +23,7 @@ def board(board_id):
         ' ORDER BY created DESC',
         [board_id]
     ).fetchall()
-    return render_template('board.html', board_id=board_id, posts=posts)
+
+    board_name = board_dict[board_id]
+
+    return render_template('board.html', board_id=board_id, board_name=board_name, posts=posts)

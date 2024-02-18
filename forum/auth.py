@@ -1,13 +1,43 @@
 import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, abort, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from forum.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+board_dict = {
+    'm' : 'Main',
+    'faq' : 'FAQ',
+    'ann' : 'Announcements',
+    'f' : 'Funny',
+    'g' : 'Gaming',
+    'pol' : 'Politics',
+    'n' : 'News',
+    'tv' : 'TV & Movies',
+    'mu' : 'Music',
+    'sci' : 'Science',
+    'his' : 'History',
+    'lit' : 'Literature',
+    'p' : 'Philosophy',
+    't' : 'Technology',
+    'sp' : 'Sports',
+    'bus' : 'Business',
+    'art' : 'Art',
+    'pic' : 'Pics',
+    'ho' : 'Hobbies',
+    'tr' : 'Travel',
+    'adv' : 'Advice',
+    'a' : 'Anime & Manga',
+    'fo' : 'Food',
+    'par' : 'Paranormal',
+    'fit' : 'Fitness',
+    'r' : 'Random',
+    'fa' : 'Fashion',
+    'out' : 'Outdoors'
+}
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
@@ -89,3 +119,8 @@ def login_required(view):
         return view(**kwargs)
     
     return wrapped_view
+
+
+def validate_board(board_id):
+    if board_id not in board_dict:
+        abort(404, f"Board {board_id} does not exist.")

@@ -3,14 +3,17 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from forum.auth import login_required
+from forum.auth import login_required, validate_board
 from forum.db import get_db
+from forum.board import board_dict
 
 bp = Blueprint('post', __name__)
 
 @bp.route('/<string:board_id>/create', methods=('GET', 'POST'))
 @login_required
 def create(board_id):
+    validate_board(board_id)
+
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
@@ -37,7 +40,11 @@ def create(board_id):
 @bp.route('/<string:board_id>/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(board_id, id):
+    validate_board(board_id)
     post = get_post(id)
+
+    if post['author_id'] != g.user['id']:
+        abort(403)
 
     if request.method == 'POST':
         title = request.form['title']
@@ -65,6 +72,7 @@ def update(board_id, id):
 @bp.route('/<string:board_id>/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(board_id, id):
+    validate_board(board_id)
     get_post(id)
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
@@ -74,6 +82,7 @@ def delete(board_id, id):
 
 @bp.route('/<string:board_id>/<int:id>', methods=('GET','POST'))
 def view(board_id, id):
+    validate_board(board_id)
     post = get_post(id)
 
     if request.method == 'POST':
@@ -97,8 +106,9 @@ def view(board_id, id):
             return redirect(url_for('post.view', id=id, board_id=board_id))
 
     comments = get_comments(id)
+    board_name = board_dict[board_id]
 
-    return render_template('post/view.html', post=post, comments=comments, board_id=board_id)
+    return render_template('post/view.html', post=post, comments=comments, board_id=board_id, board_name=board_name)
 
 
 
@@ -111,7 +121,7 @@ def get_post(id, check_author=True):
     ).fetchone()
 
     if post is None:
-        abort(404, f"Post id {id} does not exist.")
+        abort(404, f"Post ID {id} does not exist.")
 
     #if check_author and post['author_id'] != g.user['id']:
     #    abort(403)
