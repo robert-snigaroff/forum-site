@@ -1,7 +1,7 @@
 [project]
 name = "forum"
 version = "1.0.0"
-description = "A simple forum site."
+description = "A simple text-based forum site."
 dependencies = [
     "flask",
 ]

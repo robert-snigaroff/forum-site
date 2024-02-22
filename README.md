@@ -1,3 +1,3 @@
 ## Forum-Site ##
 
-This is a basic forum website adapted from the Flask tutorial blog project. More to come.
+This project is a basic text-based forum website built with Flask. It allows users to view and comment on posts with a variety of board topics. Users can create accounts and logon to create/edit posts or comment on others' posts. Image uploads coming soon...
