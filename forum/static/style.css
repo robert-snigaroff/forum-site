@@ -1,40 +1,41 @@
 html {
-    font-family: sans-serif;
-    background: #eee;
+    font-family: consolas, sans-serif;
+    background: #F9F9F4;
     padding: 1rem;
   }
   
   body {
     max-width: 960px;
     margin: 0 auto;
-    background: white;
+    background: #F9F9F4;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: serif;
-    color: #377ba8;
+    font-family: sans-serif;
+    color: #4788FF;
     margin: 1rem 0;
   }
   
   a {
-    color: #377ba8;
+    color: #4788FF;
   }
   
   hr {
     border: none;
-    border-top: 1px solid lightgray;
+    border-top: 1px solid #F9F9F4;
   }
   
   nav {
-    background: lightgray;
+    background: #F9F9F4;
     display: flex;
     align-items: center;
-    padding: 0 0.5rem;
+    padding: 0.5rem 0.5rem;
   }
   
   nav h1 {
     flex: auto;
     margin: 0;
+    font-family: sans-serif;
   }
   
   nav h1 a {
@@ -53,21 +54,35 @@ html {
     display: block;
     padding: 0.5rem;
   }
+
+  ul {
+    list-style: none;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
   
   .content {
     padding: 0 1rem 1rem;
-    background: rgb(232, 118, 4);
+    background: #F9F9F4;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
   }
   
   .content > header {
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    align-items: flex-end;
+    padding: 5px;
   }
   
   .content > header h1 {
+    font-family: sans-serif;
     flex: auto;
-    margin: 1rem 0 0.25rem 0;
+    margin: 0.25rem 0 0.25rem 0;
+  }
+
+  .content > header h1 a {
+    text-decoration: none;
   }
   
   .flash {
@@ -75,6 +90,12 @@ html {
     padding: 1em;
     background: #cae6f6;
     border: 1px solid #377ba8;
+  }
+
+  .post {
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
   }
   
   .post > header {
@@ -93,7 +114,7 @@ html {
   }
   
   .post .about {
-    color: slategray;
+    color: black;
     font-style: italic;
   }
   
@@ -127,12 +148,26 @@ html {
 
   .boxcontent {
     display: flex;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
   }
 
   .column {
     float: left;
     width: 33.33%;
-    background: rgb(196, 237, 243)
+    background: #F9F9F4
+  }
+
+  .comment {
+    border-top: 1.5px solid lightgray;
+    border-spacing: 20px;
+    padding: 5px;
+  }
+
+  .comment .about {
+    color: black;
+    font-style: italic;
   }
   
   input.danger {

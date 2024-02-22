@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}{{ board_name }}{% endblock %}</h1>
+    <h1>{% block title %}<a href="{{ url_for('board.board', board_id=board_id) }}">{{ board_name }}</a>{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -16,22 +16,23 @@
             {% endif %}
         </header>
         <p class="body">{{ post['body'] }}</p>
-        {% if g.user %}
-        <div class="new-comment">
-            <form method="post">
-                <label for="body">Add a Comment</label>
-                <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
-                <input type="submit" value="Post">
-            </form>
-        </div>
-        {% endif %}
-        {% for comment in comments %}
-        <div class="comment">
-            <header>
-                <div class="about">{{ comment['username'] }} - {{ comment['created'].strftime('%m/%d/%Y %H:%M:%S') }}</div>
-            </header>
-            <p class="body">{{ comment['body'] }}</p>
-        </div>
-        {% endfor %}
     </article>
+    {% if g.user %}
+    <div class="new-comment">
+        <form method="post">
+            <label for="body">Add a Comment</label>
+            <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+            <input type="submit" value="Post">
+        </form>
+    </div>
+    {% endif %}
+    {% for comment in comments %}
+    <div class="comment">
+        <header>
+            <div class="about">{{ comment['username'] }} - {{ comment['created'].strftime('%m/%d/%Y %H:%M:%S') }}</div>
+        </header>
+        <p class="body">{{ comment['body'] }}</p>
+    </div>
+    {% endfor %}
+    
 {% endblock %}
